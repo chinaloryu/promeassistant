@@ -13,7 +13,7 @@ def pro_query(auth_key = '', url = ''):
 	result = requests.get(url, headers = headers)
 	return result
 
-def pro_add(auth_key = '', url = '', name = '', type = 'prometheus',jsonData = {'httpMethod':'GET'}, readOnly = False, access = 'proxy'):
+def pro_add(auth_key = '', url = '', ds_url = 'http://localhost:9090', name = '', type = 'prometheus',jsonData = {'httpMethod':'GET'}, readOnly = False, access = 'proxy'):
 	url = url
 	auth_key = auth_key
 	headers = {}
@@ -23,6 +23,7 @@ def pro_add(auth_key = '', url = '', name = '', type = 'prometheus',jsonData = {
 	data['name'] = name
 	data['type'] = type
 	data['jsonData'] = jsonData
+	data['url'] = ds_url
 	data['readOnly'] = readOnly
 	data['access'] = access
 	result = requests.post(url, headers = headers, data = json.dumps(data))
@@ -34,9 +35,9 @@ if __name__ == '__main__':
 	url = ''
 	auth_key = ''
 	try:
-		opts, args = getopt.getopt(sys.argv[1:],"-h-m:-k:-n:-u:",["help","method=","key=","name=", "url="])
+		opts, args = getopt.getopt(sys.argv[1:],"-h-m:-k:-n:-u:-s:",["help","method=","key=","name=", "url=", "ds_url="])
 	except getopt.GetoptError:
-		print('test.py -q')
+		print('usage:\ntest.py -h')
 		sys.exit(2)
 	for opt, arg in opts:
 		if opt in ['-k','--key']:
@@ -49,6 +50,8 @@ if __name__ == '__main__':
 			name = arg
 		if opt in ['-u', '--url']:
 			url = arg
+		if opt in ['-s', '--ds_url']:
+			ds_url = arg
 	print(f"method is: {method},auth_key is: {auth_key}")
 	match method:
 		case 'query':
@@ -57,7 +60,7 @@ if __name__ == '__main__':
 		case 'create':
 			pass
 		case 'add':
-			r = pro_add(auth_key = auth_key, url = url, name = name)
+			r = pro_add(auth_key = auth_key, url = url, name = name, ds_url = ds_url)
 			print(r.json())
 		case 'delete':
 			pass
