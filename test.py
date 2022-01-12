@@ -4,7 +4,7 @@
 import requests,json
 import sys,getopt
 
-def pro_query(auth_key = '', url = ''):
+def pro_query(auth_key = '', url = '' ,name = name ):
 	url = url
 	auth_key = auth_key
 	headers = {}
@@ -29,6 +29,12 @@ def pro_add(auth_key = '', url = '', ds_url = 'http://localhost:9090', name = ''
 	result = requests.post(url, headers = headers, data = json.dumps(data))
 	return result
 	print(result)
+
+def pro_modify(url = '', name = name ):
+	url = url
+	headers = {}
+	headers['Authorization'] = "Bearer "+auth_key
+	headers['content-type'] = 'application/json'
 
 
 if __name__ == '__main__':
@@ -57,11 +63,18 @@ if __name__ == '__main__':
 		case 'query':
 			r = pro_query(auth_key = auth_key, url = url)
 			print(r.json())
-		case 'create':
+		case 'modify':
 			pass
 		case 'add':
-			r = pro_add(auth_key = auth_key, url = url, name = name, ds_url = ds_url)
-			print(r.json())
+			d = {}
+			r = pro_query(auth_key = auth_key, url = url, name = name )
+			# r = pro_add(auth_key = auth_key, url = url, name = name, ds_url = ds_url)
+			d = r.json()
+			if name in d['name']:
+				print(f"{name} already in datasource")
+			else:
+				r = pro_add(auth_key = auth_key, url = url, name = name, ds_url = ds_url)
+				print(r.json())
 		case 'delete':
 			pass
 
