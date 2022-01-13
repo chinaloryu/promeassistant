@@ -4,8 +4,9 @@
 import requests,json
 import sys,getopt
 
-def pro_query(auth_key = '', url = '' ,name = name ):
+def pro_query(auth_key = '', url = '' ,name = '' ):
 	url = url
+	name = name
 	auth_key = auth_key
 	headers = {}
 	headers['Authorization'] = "Bearer "+auth_key
@@ -30,8 +31,9 @@ def pro_add(auth_key = '', url = '', ds_url = 'http://localhost:9090', name = ''
 	return result
 	print(result)
 
-def pro_modify(url = '', name = name ):
+def pro_modify(url = '', name = '' ):
 	url = url
+	name = name
 	headers = {}
 	headers['Authorization'] = "Bearer "+auth_key
 	headers['content-type'] = 'application/json'
