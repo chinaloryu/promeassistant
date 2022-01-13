@@ -59,13 +59,12 @@ if __name__ == '__main__':
 		if opt in ['-s', '--ds_url']:
 			ds_url = arg
 	print(f"method is: {method},auth_key is: {auth_key}")
-	match method:
-		case 'query':
+	if method == 'query':
 			r = pro_query(auth_key = auth_key, url = url)
 			print(r.json())
-		case 'modify':
+		elif method == 'modify':
 			pass
-		case 'add':
+		elif method == 'add':
 			d = {}
 			r = pro_query(auth_key = auth_key, url = url, name = name )
 			# r = pro_add(auth_key = auth_key, url = url, name = name, ds_url = ds_url)
@@ -75,7 +74,7 @@ if __name__ == '__main__':
 			else:
 				r = pro_add(auth_key = auth_key, url = url, name = name, ds_url = ds_url)
 				print(r.json())
-		case 'delete':
+		elif method == 'delete':
 			pass
 
 	# if method == 'query':
