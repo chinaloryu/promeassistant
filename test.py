@@ -62,20 +62,20 @@ if __name__ == '__main__':
 	if method == 'query':
 			r = pro_query(auth_key = auth_key, url = url)
 			print(r.json())
-		elif method == 'modify':
-			pass
-		elif method == 'add':
-			d = {}
-			r = pro_query(auth_key = auth_key, url = url, name = name )
-			# r = pro_add(auth_key = auth_key, url = url, name = name, ds_url = ds_url)
-			d = r.json()
-			if name in d['name']:
-				print(f"{name} already in datasource")
-			else:
-				r = pro_add(auth_key = auth_key, url = url, name = name, ds_url = ds_url)
-				print(r.json())
-		elif method == 'delete':
-			pass
+	elif method == 'modify':
+		pass
+	elif method == 'add':
+		d = {}
+		r = pro_query(auth_key = auth_key, url = url, name = name )
+		# r = pro_add(auth_key = auth_key, url = url, name = name, ds_url = ds_url)
+		d = r.json()
+		if name in d['name']:
+			print(f"{name} already in datasource")
+		else:
+			r = pro_add(auth_key = auth_key, url = url, name = name, ds_url = ds_url)
+			print(r.json())
+	elif method == 'delete':
+		pass
 
 	# if method == 'query':
 	# 	r = pro_query(auth_key = auth_key)
